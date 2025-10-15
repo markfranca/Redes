@@ -34,9 +34,22 @@ player_answers = {}          # Respostas já enviadas pelos jogadores
 # ============================================================
 
 questions = [
-    {"text": "Qual a capital do Brasil?", "options": ["Rio", "Brasília", "SP"], "correct": "Brasília"},
-    {"text": "2 + 2 = ?", "options": ["3", "4", "5"], "correct": "4"},
-    {"text": "Cor do céu?", "options": ["Azul", "Verde", "Amarelo"], "correct": "Azul"},
+       {
+        "text": "Qual é a capital da Islândia?",
+        "options": ["Oslo", "Reykjavik", "Helsinque"],
+        "correct": "Reykjavik"
+    },
+    {"text": "Quem é o melhor professor da POLI?", "options": ["Tarciana", "Joabe", "Edison"], "correct": "Edison"},
+     {
+        "text": "Em que ano ocorreu a queda do Muro de Berlim?",
+        "options": ["1989", "1991", "1985"],
+        "correct": "1989"
+    },
+        {
+        "text": "Qual é o idioma mais falado no mundo?",
+        "options": ["Inglês", "Mandarim", "Espanhol"],
+        "correct": "Mandarim"
+    },
 ]
 
 
@@ -99,7 +112,6 @@ def check_timeout():
 def build_response(status_code, body):
     """
     Monta uma resposta HTTP completa.
-    Este servidor NÃO usa frameworks (como Flask), então criamos as respostas
     manualmente — isso demonstra o funcionamento real do protocolo HTTP.
 
     Uma resposta HTTP tem o seguinte formato:
@@ -155,7 +167,6 @@ def handle_request(conn):
         if not data:
             conn.close()
             return
-
         # A primeira linha do HTTP contém método e caminho:
         # Exemplo: "GET /api/status HTTP/1.1"
         method, path, *_ = data.split(' ', 2)
@@ -290,6 +301,7 @@ def server_loop():
         while True:
             conn, addr = s.accept()  # Aceita uma nova conexão (bloqueante até alguém conectar)
             print(f"[NOVA CONEXÃO] {addr}")
+            print(f"{connected_players}")
 
             # Cria uma nova thread para tratar a requisição desse cliente
             threading.Thread(target=handle_request, args=(conn,)).start()
